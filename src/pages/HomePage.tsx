@@ -1,0 +1,119 @@
+import { lazy, Suspense } from 'react';
+import { Header } from '@/components/Header';
+import { HeroSection } from '@/sections/HeroSection';
+import { StatsSection } from '@/sections/StatsSection';
+import { useMouseParallax } from '@/hooks/useMouseParallax';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { useParallaxBackground } from '@/hooks/useParallaxBackground';
+
+const SceneCanvas = lazy(() =>
+  import('@/three/SceneCanvas').then((m) => ({ default: m.SceneCanvas })),
+);
+const ModesSection = lazy(() =>
+  import('@/sections/ModesSection').then((m) => ({ default: m.ModesSection })),
+);
+const DifficultySection = lazy(() =>
+  import('@/sections/DifficultySection').then((m) => ({ default: m.DifficultySection })),
+);
+const FeaturesSection = lazy(() =>
+  import('@/sections/FeaturesSection').then((m) => ({ default: m.FeaturesSection })),
+);
+const SideSelectionSection = lazy(() =>
+  import('@/sections/SideSelectionSection').then((m) => ({ default: m.SideSelectionSection })),
+);
+const PlayerStatsSection = lazy(() =>
+  import('@/sections/PlayerStatsSection').then((m) => ({ default: m.PlayerStatsSection })),
+);
+const PlatformFeaturesSection = lazy(() =>
+  import('@/sections/PlatformFeaturesSection').then((m) => ({ default: m.PlatformFeaturesSection })),
+);
+const FooterSection = lazy(() =>
+  import('@/sections/FooterSection').then((m) => ({ default: m.FooterSection })),
+);
+
+function PanelFallback() {
+  return <div className="h-48 animate-pulse glass-panel rounded-2xl opacity-30" />;
+}
+
+export function HomePage() {
+  const mouseRef = useMouseParallax();
+  const reducedMotion = useReducedMotion();
+  useParallaxBackground('[data-parallax-bg]');
+
+  return (
+    <div className="relative min-h-screen bg-bg-primary overflow-x-hidden">
+      <div className="noise-overlay" />
+
+      <div
+        data-parallax-bg
+        className="fixed inset-0 z-0 pointer-events-none will-change-transform"
+        style={{
+          background: `
+            radial-gradient(ellipse 80% 60% at 50% 40%, rgba(139, 61, 255, 0.15) 0%, transparent 60%),
+            radial-gradient(ellipse 60% 40% at 30% 70%, rgba(212, 76, 255, 0.08) 0%, transparent 50%),
+            radial-gradient(ellipse 50% 50% at 70% 30%, rgba(176, 92, 255, 0.06) 0%, transparent 50%),
+            linear-gradient(180deg, #05020B 0%, #0B0715 50%, #05020B 100%)
+          `,
+        }}
+      />
+
+      <Suspense fallback={null}>
+        <SceneCanvas mouseRef={mouseRef} reducedMotion={reducedMotion} />
+      </Suspense>
+
+      <div className="relative z-10 flex flex-col min-h-screen">
+        <Header />
+
+        <main className="flex-1 w-full max-w-[1920px] mx-auto px-3 sm:px-4 lg:px-6">
+          <div className="grid grid-cols-1 xl:grid-cols-[minmax(280px,320px)_1fr_minmax(280px,320px)] gap-4 xl:gap-6 items-start">
+            {/* Левая колонка */}
+            <aside className="hidden xl:block space-y-2 pt-4 sticky top-4 max-h-[calc(100vh-2rem)] overflow-y-auto scrollbar-hide">
+              <div className="mb-6">
+                <h3 className="section-title mb-4">О платформе</h3>
+                <StatsSection compact />
+              </div>
+              <Suspense fallback={<PanelFallback />}>
+                <ModesSection compact />
+                <DifficultySection compact />
+                <SideSelectionSection />
+              </Suspense>
+            </aside>
+
+            {/* Центральная колонка */}
+            <div className="flex flex-col items-center min-h-[70vh] xl:min-h-[85vh]">
+              <HeroSection />
+              <div className="xl:hidden w-full">
+                <StatsSection />
+              </div>
+            </div>
+
+            {/* Правая колонка */}
+            <aside className="hidden xl:block space-y-2 pt-4 sticky top-4 max-h-[calc(100vh-2rem)] overflow-y-auto scrollbar-hide">
+              <Suspense fallback={<PanelFallback />}>
+                <PlatformFeaturesSection />
+                <PlayerStatsSection />
+                <FeaturesSection compact />
+              </Suspense>
+            </aside>
+          </div>
+
+          {/* Мобильные секции */}
+          <div className="xl:hidden">
+            <Suspense fallback={<PanelFallback />}>
+              <ModesSection />
+              <DifficultySection />
+              <SideSelectionSection />
+              <PlatformFeaturesSection />
+              <PlayerStatsSection />
+              <FeaturesSection />
+            </Suspense>
+          </div>
+        </main>
+
+        <Suspense fallback={null}>
+          <FooterSection />
+        </Suspense>
+      </div>
+    </div>
+  );
+}
