@@ -6,13 +6,13 @@ const PRECACHE_URLS = [
   `${BASE}`,
   `${BASE}index.html`,
   `${BASE}manifest.json`,
-  `${BASE}icons/icon-192.png`,
-  `${BASE}icons/icon-512.png`,
 ];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE_URLS)).then(() => self.skipWaiting()),
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(PRECACHE_URLS))
+      .then(() => self.skipWaiting()),
   );
 });
 
@@ -41,12 +41,22 @@ self.addEventListener('fetch', (event) => {
   if (request.method !== 'GET') return;
   if (!url.pathname.startsWith(BASE)) return;
 
-  if (request.mode === 'navigate' || url.pathname.endsWith('.html') || url.pathname === BASE || url.pathname === `${BASE}index.html`) {
+  if (
+    request.mode === 'navigate' ||
+    url.pathname.endsWith('.html') ||
+    url.pathname === BASE ||
+    url.pathname === `${BASE}index.html`
+  ) {
     event.respondWith(networkFirst(request));
     return;
   }
 
-  if (url.pathname.includes('/version.json')) {
+  if (url.pathname.includes('/assets/') || url.pathname.includes('/version.json')) {
+    event.respondWith(networkFirst(request));
+    return;
+  }
+
+  if (url.pathname.includes('sw.js')) {
     event.respondWith(networkOnly(request));
     return;
   }
@@ -57,8 +67,10 @@ self.addEventListener('fetch', (event) => {
 async function networkFirst(request) {
   try {
     const response = await fetch(request);
-    const cache = await caches.open(CACHE_NAME);
-    cache.put(request, response.clone());
+    if (response.ok) {
+      const cache = await caches.open(CACHE_NAME);
+      cache.put(request, response.clone());
+    }
     return response;
   } catch {
     const cached = await caches.match(request);

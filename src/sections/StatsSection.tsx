@@ -34,12 +34,11 @@ export function StatsSection({ compact = false }: StatsSectionProps) {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const runAnimation = (card: Element, valueEl: HTMLElement, i: number, stat: (typeof STATS)[number]) => {
-        gsap.from(card, {
-          y: compact ? 20 : 40,
-          opacity: 0,
-          duration: 0.8,
-          delay: i * 0.15,
-        });
+        gsap.fromTo(
+          card,
+          { y: compact ? 20 : 40, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, delay: i * 0.15 },
+        );
         animateCounter(valueEl, stat.value, stat.decimals, stat.suffix);
       };
 

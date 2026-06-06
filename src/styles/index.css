@@ -94,6 +94,7 @@
   }
 
   .hero-gradient-text {
+    color: #ffffff;
     background: linear-gradient(
       135deg,
       #ffffff 0%,

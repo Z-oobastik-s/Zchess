@@ -5,6 +5,8 @@ import { StatsSection } from '@/sections/StatsSection';
 import { useMouseParallax } from '@/hooks/useMouseParallax';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { useParallaxBackground } from '@/hooks/useParallaxBackground';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { SceneFallback } from '@/components/SceneFallback';
 
 const SceneCanvas = lazy(() =>
   import('@/three/SceneCanvas').then((m) => ({ default: m.SceneCanvas })),
@@ -57,9 +59,11 @@ export function HomePage() {
         }}
       />
 
-      <Suspense fallback={null}>
-        <SceneCanvas mouseRef={mouseRef} reducedMotion={reducedMotion} />
-      </Suspense>
+      <ErrorBoundary fallback={<SceneFallback />}>
+        <Suspense fallback={<SceneFallback />}>
+          <SceneCanvas mouseRef={mouseRef} reducedMotion={reducedMotion} />
+        </Suspense>
+      </ErrorBoundary>
 
       <div className="relative z-10 flex flex-col min-h-screen">
         <Header />

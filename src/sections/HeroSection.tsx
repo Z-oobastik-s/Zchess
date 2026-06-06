@@ -10,32 +10,42 @@ export function HeroSection() {
   const ctaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const targets = [
+      titleRef.current,
+      subtitleRef.current,
+      ...(ctaRef.current ? Array.from(ctaRef.current.children) : []),
+    ].filter(Boolean);
+
     const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
 
     if (titleRef.current) {
-      tl.from(titleRef.current, {
-        y: 60,
-        opacity: 0,
-        duration: 1.2,
-        delay: 0.5,
-      });
+      tl.fromTo(
+        titleRef.current,
+        { y: 60, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, delay: 0.3 },
+      );
     }
     if (subtitleRef.current) {
-      tl.from(
+      tl.fromTo(
         subtitleRef.current,
-        { y: 30, opacity: 0, duration: 0.8 },
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8 },
         '-=0.6',
       );
     }
     if (ctaRef.current) {
-      tl.from(
+      tl.fromTo(
         ctaRef.current.children,
-        { y: 20, opacity: 0, stagger: 0.15, duration: 0.6 },
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, stagger: 0.15, duration: 0.6 },
         '-=0.4',
       );
     }
 
-    return () => { tl.kill(); };
+    return () => {
+      tl.kill();
+      gsap.set(targets, { opacity: 1, y: 0, clearProps: 'transform' });
+    };
   }, []);
 
   const scrollToModes = () => {

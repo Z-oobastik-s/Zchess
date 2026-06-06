@@ -40,14 +40,7 @@ export function useServiceWorker() {
           });
         });
 
-        let refreshing = false;
-        navigator.serviceWorker.addEventListener('controllerchange', () => {
-          if (refreshing) return;
-          refreshing = true;
-          window.location.reload();
-        });
-
-        setInterval(() => reg.update(), 60 * 1000);
+        setInterval(() => reg.update(), 5 * 60 * 1000);
       } catch (err) {
         console.warn('SW registration failed:', err);
       }
