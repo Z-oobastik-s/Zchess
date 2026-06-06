@@ -1,17 +1,15 @@
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-let registered = false;
+gsap.registerPlugin(ScrollTrigger);
+
+gsap.defaults({
+  ease: 'power3.out',
+  duration: 0.8,
+});
 
 export function initGsap() {
-  if (registered) return;
-  gsap.registerPlugin(ScrollTrigger);
-  registered = true;
-
-  gsap.defaults({
-    ease: 'power3.out',
-    duration: 0.8,
-  });
+  ScrollTrigger.refresh();
 }
 
 export { gsap, ScrollTrigger };

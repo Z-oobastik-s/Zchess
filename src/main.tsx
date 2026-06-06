@@ -1,7 +1,8 @@
 import { createRoot } from 'react-dom/client';
+import './styles/index.css';
+import '@/animations/gsapSetup';
 import App from './App';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
-import './styles/index.css';
 
 const redirect = sessionStorage.getItem('redirect');
 if (redirect) {
