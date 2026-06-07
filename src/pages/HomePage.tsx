@@ -7,6 +7,7 @@ import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { useParallaxBackground } from '@/hooks/useParallaxBackground';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { SceneFallback } from '@/components/SceneFallback';
+import bgHome from '../../assets/Image/background_home_page.png';
 
 const SceneCanvas = lazy(() =>
   import('@/three/SceneCanvas').then((m) => ({ default: m.SceneCanvas })),
@@ -43,20 +44,11 @@ export function HomePage() {
   useParallaxBackground('[data-parallax-bg]');
 
   return (
-    <div className="relative min-h-screen bg-bg-primary overflow-x-hidden">
-      <div className="noise-overlay" />
-
+    <div className="relative min-h-screen bg-[#05020B] overflow-x-hidden">
       <div
         data-parallax-bg
-        className="fixed inset-0 z-0 pointer-events-none will-change-transform"
-        style={{
-          background: `
-            radial-gradient(ellipse 80% 60% at 50% 40%, rgba(139, 61, 255, 0.15) 0%, transparent 60%),
-            radial-gradient(ellipse 60% 40% at 30% 70%, rgba(212, 76, 255, 0.08) 0%, transparent 50%),
-            radial-gradient(ellipse 50% 50% at 70% 30%, rgba(176, 92, 255, 0.06) 0%, transparent 50%),
-            linear-gradient(180deg, #05020B 0%, #0B0715 50%, #05020B 100%)
-          `,
-        }}
+        className="fixed inset-0 z-0 pointer-events-none will-change-transform bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${bgHome})` }}
       />
 
       <ErrorBoundary fallback={<SceneFallback />}>
