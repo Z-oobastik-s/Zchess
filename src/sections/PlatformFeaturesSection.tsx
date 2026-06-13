@@ -9,7 +9,11 @@ const PLATFORM_FEATURES = [
   { title: 'Достижения', desc: 'Система прогресса' },
 ] as const;
 
-export function PlatformFeaturesSection() {
+interface PlatformFeaturesSectionProps {
+  compact?: boolean;
+}
+
+export function PlatformFeaturesSection({ compact = false }: PlatformFeaturesSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -27,20 +31,20 @@ export function PlatformFeaturesSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="px-2 py-4">
-      <h3 className="section-title mb-4">Особенности платформы</h3>
-      <div className="grid grid-cols-2 gap-3">
+    <section ref={sectionRef} className={`px-2 ${compact ? 'py-2' : 'py-4'}`}>
+      <h3 className={`section-title ${compact ? 'mb-2' : 'mb-4'}`}>Особенности платформы</h3>
+      <div className={`grid grid-cols-2 ${compact ? 'gap-2' : 'gap-3'}`}>
         {PLATFORM_FEATURES.map((f) => (
           <div
             key={f.title}
             data-pfeat
-            className="glass-panel p-4 text-center hover:shadow-neon-sm transition-shadow cursor-pointer group"
+            className={`glass-panel ${compact ? 'p-2.5' : 'p-4'} text-center hover:shadow-neon-sm transition-shadow cursor-pointer group`}
           >
-            <div className="w-12 h-12 mx-auto mb-2 rounded-full bg-accent-primary/10 flex items-center justify-center group-hover:scale-110 transition-transform">
-              <img src={horseIcon} alt="" className="w-7 h-7 object-contain opacity-80" loading="lazy" />
+            <div className={`${compact ? 'w-9 h-9 mb-1' : 'w-12 h-12 mb-2'} mx-auto rounded-full bg-accent-primary/10 flex items-center justify-center group-hover:scale-105 transition-transform`}>
+              <img src={horseIcon} alt="" className={`${compact ? 'w-5 h-5' : 'w-7 h-7'} object-contain opacity-80`} loading="lazy" />
             </div>
-            <div className="text-xs font-bold uppercase tracking-wider">{f.title}</div>
-            <div className="text-[10px] text-text-secondary mt-1">{f.desc}</div>
+            <div className={`${compact ? 'text-[10px]' : 'text-xs'} font-bold uppercase tracking-wider`}>{f.title}</div>
+            <div className={`${compact ? 'text-[9px]' : 'text-[10px]'} text-text-secondary mt-0.5`}>{f.desc}</div>
           </div>
         ))}
       </div>

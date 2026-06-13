@@ -65,15 +65,15 @@ export function StatsSection({ compact = false }: StatsSectionProps) {
 
   if (compact) {
     return (
-      <section ref={sectionRef} className="grid grid-cols-1 gap-2">
+      <section ref={sectionRef} className="grid grid-cols-1 gap-1.5">
         {STATS.map((stat, i) => (
           <div
             key={stat.label}
             data-stat={i}
-            className="glass-panel neon-border p-3 flex items-center justify-between hover:shadow-neon-sm transition-shadow"
+            className="glass-panel p-2 flex items-center justify-between hover:shadow-neon-sm transition-shadow"
           >
-            <span className="text-[10px] uppercase tracking-wider text-text-secondary">{stat.label}</span>
-            <span data-value className="font-display text-lg font-black text-accent-glow">
+            <span className="text-[9px] uppercase tracking-wider text-text-secondary">{stat.label}</span>
+            <span data-value className="font-display text-base font-black text-accent-glow">
               0{stat.suffix}
             </span>
           </div>

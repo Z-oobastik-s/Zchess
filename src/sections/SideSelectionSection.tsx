@@ -10,26 +10,30 @@ const SIDES = [
   { id: 'random' as const, label: 'Случайно', icon: swordsIcon },
 ];
 
-export function SideSelectionSection() {
+interface SideSelectionSectionProps {
+  compact?: boolean;
+}
+
+export function SideSelectionSection({ compact = false }: SideSelectionSectionProps) {
   const [selected, setSelected] = useState<string>('white');
 
   return (
-    <section className="px-2 py-4">
-      <h3 className="section-title mb-4">Играй за</h3>
-      <div className="flex gap-3">
+    <section className={`px-2 ${compact ? 'py-2' : 'py-4'}`}>
+      <h3 className={`section-title ${compact ? 'mb-2' : 'mb-4'}`}>Играй за</h3>
+      <div className="flex gap-2">
         {SIDES.map((side) => (
           <motion.button
             key={side.id}
             type="button"
             onClick={() => setSelected(side.id)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className={`flex-1 glass-panel p-3 flex flex-col items-center gap-2 transition-all duration-300 ${
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className={`flex-1 glass-panel ${compact ? 'p-2' : 'p-3'} flex flex-col items-center gap-1 transition-all duration-300 outline-none focus:outline-none ${
               selected === side.id ? 'shadow-neon border-accent-primary/50' : ''
             }`}
           >
-            <img src={side.icon} alt={side.label} className="w-8 h-8 object-contain" loading="lazy" />
-            <span className="text-[10px] uppercase tracking-wider font-bold">{side.label}</span>
+            <img src={side.icon} alt={side.label} className={`${compact ? 'w-6 h-6' : 'w-8 h-8'} object-contain`} loading="lazy" draggable={false} />
+            <span className={`${compact ? 'text-[9px]' : 'text-[10px]'} uppercase tracking-wider font-bold`}>{side.label}</span>
           </motion.button>
         ))}
       </div>

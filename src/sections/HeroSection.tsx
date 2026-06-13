@@ -53,35 +53,35 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative z-10 flex flex-col items-center text-center px-4 pt-8 md:pt-12 pb-6">
+    <section className="relative z-10 flex flex-col items-center text-center px-4 pt-8 md:pt-12 pb-6 xl:pt-2 xl:pb-2">
       <h2
         ref={titleRef}
-        className="font-hero text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-none hero-gradient-text max-w-5xl"
+        className="font-hero text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-5xl 2xl:text-6xl leading-none hero-gradient-text max-w-5xl"
       >
         Шахматы нового поколения
       </h2>
 
       <p
         ref={subtitleRef}
-        className="mt-4 md:mt-6 text-lg md:text-xl lg:text-2xl text-text-secondary font-light tracking-wide"
+        className="mt-4 md:mt-6 xl:mt-2 text-lg md:text-xl lg:text-2xl xl:text-base text-text-secondary font-light tracking-wide"
       >
         Играй. Развивайся. Доминируй.
       </p>
 
-      <div ref={ctaRef} className="mt-8 md:mt-10 flex flex-wrap items-center justify-center gap-4">
+      <div ref={ctaRef} className="mt-8 md:mt-10 xl:mt-4 flex flex-wrap items-center justify-center gap-4">
         <motion.button
           type="button"
           onClick={() => { window.location.hash = '#play'; }}
-          whileHover={{ scale: 1.06 }}
+          whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.97 }}
-          className="relative group cursor-pointer"
+          className="relative cursor-pointer outline-none focus:outline-none"
         >
           <img
             src={startBtnImg}
             alt="Играть сейчас"
-            className="h-14 md:h-16 w-auto drop-shadow-neon transition-all duration-300 group-hover:brightness-125 group-hover:drop-shadow-[0_0_30px_rgba(139,61,255,0.8)]"
+            draggable={false}
+            className="h-14 md:h-16 xl:h-12 w-auto drop-shadow-neon transition-all duration-300 hover:brightness-110"
           />
-          <span className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity bg-accent-primary/10 blur-xl" />
         </motion.button>
         <GlowButton variant="secondary" onClick={scrollToModes}>
           Узнать больше

@@ -55,24 +55,24 @@ export function ModesSection({ compact = false }: ModesSectionProps) {
 
   if (compact) {
     return (
-      <section ref={sectionRef} className="px-2 py-4">
-        <h3 className="section-title mb-4">Режимы игры</h3>
-        <div className="space-y-3">
+      <section ref={sectionRef} className="px-2 py-2">
+        <h3 className="section-title mb-2">Режимы игры</h3>
+        <div className="space-y-2">
           {MODES.map((mode) => (
-            <GlassCard key={mode.title} data-mode="" className="p-4 cursor-pointer group">
-              <div className="flex items-center gap-4">
+            <GlassCard key={mode.title} data-mode="" className="p-3 cursor-pointer group">
+              <div className="flex items-center gap-3">
                 <div
-                  className="w-14 h-14 rounded-full flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform"
+                  className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform"
                   style={{
                     background: `radial-gradient(circle, ${mode.color}33 0%, transparent 70%)`,
                     boxShadow: `0 0 20px ${mode.color}44`,
                   }}
                 >
-                  <img src={mode.icon} alt={mode.title} className="w-9 h-9 object-contain" loading="lazy" />
+                  <img src={mode.icon} alt={mode.title} className="w-7 h-7 object-contain" loading="lazy" />
                 </div>
                 <div>
-                  <h4 className="font-display text-sm font-bold uppercase tracking-wider">{mode.title}</h4>
-                  <p className="text-[11px] text-text-secondary mt-0.5">{mode.description}</p>
+                  <h4 className="font-display text-xs font-bold uppercase tracking-wider">{mode.title}</h4>
+                  <p className="text-[10px] text-text-secondary mt-0.5 leading-snug">{mode.description}</p>
                 </div>
               </div>
             </GlassCard>

@@ -64,7 +64,7 @@ export function GlowButton({
         <a
           href={href}
           onClick={handleClick}
-          className={`${baseClass} ${variantClass} ${className}`}
+          className={`${baseClass} ${variantClass} ${className} outline-none focus:outline-none`}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -74,7 +74,7 @@ export function GlowButton({
         <button
           type="button"
           onClick={handleClick}
-          className={`${baseClass} ${variantClass} ${className}`}
+          className={`${baseClass} ${variantClass} ${className} outline-none focus:outline-none`}
         >
           {content}
         </button>

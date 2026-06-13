@@ -49,24 +49,24 @@ export function DifficultySection({ compact = false }: DifficultySectionProps) {
 
   if (compact) {
     return (
-      <section ref={sectionRef} className="px-2 py-4">
-        <h3 className="section-title mb-4">Сложность</h3>
-        <div className="grid grid-cols-4 gap-2">
+      <section ref={sectionRef} className="px-2 py-2">
+        <h3 className="section-title mb-2">Сложность</h3>
+        <div className="grid grid-cols-4 gap-1.5">
           {DIFFICULTIES.map((diff) => (
             <motion.div
               key={diff.name}
               data-diff
-              whileHover={{ scale: 1.08 }}
-              className="flex flex-col items-center gap-1 cursor-pointer group"
+              whileHover={{ scale: 1.05 }}
+              className="flex flex-col items-center gap-0.5 cursor-pointer group"
               title={diff.name}
             >
               <div
-                className="w-12 h-12 rounded-xl glass-panel flex items-center justify-center group-hover:shadow-neon-sm transition-all"
+                className="w-10 h-10 rounded-lg glass-panel flex items-center justify-center group-hover:shadow-neon-sm transition-all"
                 style={{ boxShadow: `0 0 12px ${diff.color}22` }}
               >
-                <img src={diff.icon} alt={diff.name} className="w-7 h-7 object-contain" loading="lazy" />
+                <img src={diff.icon} alt={diff.name} className="w-6 h-6 object-contain" loading="lazy" />
               </div>
-              <span className="text-[8px] font-medium uppercase tracking-wider text-center leading-tight" style={{ color: diff.color }}>
+              <span className="text-[7px] font-medium uppercase tracking-wider text-center leading-tight" style={{ color: diff.color }}>
                 {diff.name}
               </span>
             </motion.div>

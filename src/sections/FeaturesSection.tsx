@@ -35,20 +35,21 @@ export function FeaturesSection({ compact = false }: FeaturesSectionProps) {
   }, [compact]);
 
   if (compact) {
+    const items = FEATURES.slice(0, 4);
     return (
-      <section ref={sectionRef} className="px-2 py-4">
-        <h3 className="section-title mb-4">Почему именно мы</h3>
-        <div className="space-y-2">
-          {FEATURES.map((f) => (
+      <section ref={sectionRef} className="px-2 py-2">
+        <h3 className="section-title mb-2">Почему именно мы</h3>
+        <div className="space-y-1.5">
+          {items.map((f) => (
             <div
               key={f.title}
               data-feature
-              className="glass-panel p-3 flex items-center gap-3 hover:shadow-neon-sm transition-shadow"
+              className="glass-panel p-2 flex items-center gap-2 hover:shadow-neon-sm transition-shadow"
             >
-              <span className="text-lg flex-shrink-0">{f.icon}</span>
+              <span className="text-base flex-shrink-0">{f.icon}</span>
               <div>
-                <h4 className="text-[11px] font-bold uppercase tracking-wider">{f.title}</h4>
-                <p className="text-[10px] text-text-secondary">{f.desc}</p>
+                <h4 className="text-[10px] font-bold uppercase tracking-wider">{f.title}</h4>
+                <p className="text-[9px] text-text-secondary leading-snug">{f.desc}</p>
               </div>
             </div>
           ))}

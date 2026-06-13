@@ -2,16 +2,9 @@ import { lazy, Suspense } from 'react';
 import { Header } from '@/components/Header';
 import { HeroSection } from '@/sections/HeroSection';
 import { StatsSection } from '@/sections/StatsSection';
-import { useMouseParallax } from '@/hooks/useMouseParallax';
-import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { useParallaxBackground } from '@/hooks/useParallaxBackground';
-import { ErrorBoundary } from '@/components/ErrorBoundary';
-import { SceneFallback } from '@/components/SceneFallback';
 import bgHome from '../../assets/Image/background_home_page.png';
 
-const SceneCanvas = lazy(() =>
-  import('@/three/SceneCanvas').then((m) => ({ default: m.SceneCanvas })),
-);
 const ModesSection = lazy(() =>
   import('@/sections/ModesSection').then((m) => ({ default: m.ModesSection })),
 );
@@ -39,44 +32,36 @@ function PanelFallback() {
 }
 
 export function HomePage() {
-  const mouseRef = useMouseParallax();
-  const reducedMotion = useReducedMotion();
   useParallaxBackground('[data-parallax-bg]');
 
   return (
-    <div className="relative min-h-screen bg-[#05020B] overflow-x-hidden">
+    <div className="relative min-h-screen xl:h-screen xl:overflow-hidden bg-[#05020B] overflow-x-hidden">
       <div
         data-parallax-bg
         className="fixed inset-0 z-0 pointer-events-none will-change-transform bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${bgHome})` }}
       />
 
-      <ErrorBoundary fallback={<SceneFallback />}>
-        <Suspense fallback={<SceneFallback />}>
-          <SceneCanvas mouseRef={mouseRef} reducedMotion={reducedMotion} />
-        </Suspense>
-      </ErrorBoundary>
-
-      <div className="relative z-10 flex flex-col min-h-screen">
+      <div className="relative z-10 flex flex-col min-h-screen xl:h-full">
         <Header />
 
-        <main className="flex-1 w-full max-w-[1920px] mx-auto px-3 sm:px-4 lg:px-6">
-          <div className="grid grid-cols-1 xl:grid-cols-[minmax(280px,320px)_1fr_minmax(280px,320px)] gap-4 xl:gap-6 items-start">
+        <main className="flex-1 xl:min-h-0 w-full max-w-[1920px] mx-auto px-3 sm:px-4 lg:px-6">
+          <div className="grid grid-cols-1 xl:grid-cols-[minmax(250px,290px)_1fr_minmax(250px,290px)] gap-3 xl:gap-4 xl:h-full items-start xl:items-stretch">
             {/* Левая колонка */}
-            <aside className="hidden xl:block space-y-2 pt-4 sticky top-4 max-h-[calc(100vh-2rem)] overflow-y-auto scrollbar-hide">
-              <div className="mb-6">
-                <h3 className="section-title mb-4">О платформе</h3>
+            <aside className="hidden xl:flex xl:flex-col xl:gap-1 xl:h-full xl:min-h-0 xl:overflow-y-auto scrollbar-hide xl:py-1">
+              <div className="mb-1">
+                <h3 className="section-title mb-2">О платформе</h3>
                 <StatsSection compact />
               </div>
               <Suspense fallback={<PanelFallback />}>
                 <ModesSection compact />
                 <DifficultySection compact />
-                <SideSelectionSection />
+                <SideSelectionSection compact />
               </Suspense>
             </aside>
 
             {/* Центральная колонка */}
-            <div className="flex flex-col items-center min-h-[70vh] xl:min-h-[85vh]">
+            <div className="flex flex-col items-center justify-center min-h-[60vh] xl:min-h-0 xl:h-full xl:py-2">
               <HeroSection />
               <div className="xl:hidden w-full">
                 <StatsSection />
@@ -84,10 +69,10 @@ export function HomePage() {
             </div>
 
             {/* Правая колонка */}
-            <aside className="hidden xl:block space-y-2 pt-4 sticky top-4 max-h-[calc(100vh-2rem)] overflow-y-auto scrollbar-hide">
+            <aside className="hidden xl:flex xl:flex-col xl:gap-1 xl:h-full xl:min-h-0 xl:overflow-y-auto scrollbar-hide xl:py-1">
               <Suspense fallback={<PanelFallback />}>
-                <PlatformFeaturesSection />
-                <PlayerStatsSection />
+                <PlatformFeaturesSection compact />
+                <PlayerStatsSection compact />
                 <FeaturesSection compact />
               </Suspense>
             </aside>
@@ -106,9 +91,11 @@ export function HomePage() {
           </div>
         </main>
 
-        <Suspense fallback={null}>
-          <FooterSection />
-        </Suspense>
+        <div className="xl:hidden">
+          <Suspense fallback={null}>
+            <FooterSection />
+          </Suspense>
+        </div>
       </div>
     </div>
   );
